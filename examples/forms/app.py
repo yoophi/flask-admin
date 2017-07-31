@@ -15,6 +15,13 @@ from flask_admin.contrib import sqla
 # Create application
 app = Flask(__name__, static_folder='files')
 
+from flask_debugtoolbar import DebugToolbarExtension
+
+app.config['DEBUG'] = True
+app.config['SECRET_KEY'] = 'SECRET'
+debug_toolbar = DebugToolbarExtension()
+debug_toolbar.init_app(app)
+
 # Create dummy secrey key so we can use sessions
 app.config['SECRET_KEY'] = '123456790'
 
@@ -157,7 +164,7 @@ def index():
     return '<a href="/admin/">Click me to get to Admin!</a>'
 
 # Create admin
-admin = Admin(app, 'Example: Forms', template_mode='bootstrap3')
+admin = Admin(app, 'Example: Forms', template_mode='sb-admin-v2')
 
 # Add views
 admin.add_view(FileView(File, db.session))

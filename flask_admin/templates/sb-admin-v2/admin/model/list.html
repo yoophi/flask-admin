@@ -12,6 +12,8 @@
 
 {% block body %}
     {% block model_menu_bar %}
+    <h1 class="page-header">{{ admin_view.name }}</h1>
+
     <ul class="nav nav-tabs actions-nav">
         <li class="active">
             <a href="javascript:void(0)">{{ _gettext('List') }}{% if count %} ({{ count }}){% endif %}</a>

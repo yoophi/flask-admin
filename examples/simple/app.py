@@ -1,4 +1,5 @@
 from flask import Flask
+from flask.ext.admin.consts import ICON_TYPE_FONT_AWESOME
 
 import flask_admin as admin
 
@@ -24,18 +25,41 @@ class AnotherAdminView(admin.BaseView):
 app = Flask(__name__, template_folder='templates')
 app.debug = True
 
+
 # Flask views
 @app.route('/')
 def index():
     return '<a href="/admin/">Click me to get to Admin!</a>'
 
+
 # Create admin interface
-admin = admin.Admin(name="Example: Simple Views", template_mode='sb-admin-v2')
-admin.add_view(MyAdminView(name="view1", category='Test'))
+admin = admin.Admin(name="Example: Simple Views",
+                    index_view=admin.AdminIndexView(
+                        name='Home',
+                        template='admin/index.html',
+                        menu_icon_type=ICON_TYPE_FONT_AWESOME,
+                        menu_icon_value='fa-dashboard fa-fw',
+                    ),
+                    template_mode='sb-admin-v2',
+                    category_icon_classes={
+                        'Home': 'fa fa-dashboard fa-fw',
+                        'Test': 'fa fa-bar-chart-o fa-fw',
+                    },
+                    )
+admin.add_view(MyAdminView(name="view1", category='Test', ))
 admin.add_view(AnotherAdminView(name="view2", category='Test'))
 admin.init_app(app)
 
 if __name__ == '__main__':
-
     # Start app
     app.run()
+
+
+    # admin = Admin(
+    #     app,
+    #     index_view=AdminIndexView(
+    #         name='Home',
+    #         template='admin/myhome.html',
+    #         url='/'
+    #     )
+    # )

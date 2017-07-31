@@ -5,7 +5,7 @@ from flask_admin import Admin
 app = Flask(__name__)
 app.debug = True
 
-admin = Admin(app, name="Example: Quickstart")
+admin = Admin(app, name="Example: Quickstart", template_mode='sb-admin-v2')
 
 if __name__ == '__main__':
 
